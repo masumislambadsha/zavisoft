@@ -130,8 +130,8 @@ export default function Categories() {
           </div>
         </div>
 
-        {/* Categories Container - Single rounded container with both categories collapsed together */}
-        <div className="flex rounded-[48px] overflow-hidden shadow-lg ml-4">
+        {/* Categories Container - Single container with only top-left rounded */}
+        <div className="flex rounded-tl-[48px] overflow-hidden shadow-lg ml-4">
           {visibleCategories.map((category, index) => (
             <Link
               key={category.id}
@@ -140,7 +140,7 @@ export default function Categories() {
               style={{ backgroundColor: bgColors[index] }}
             >
               {/* Category Image */}
-              <div className="relative w-full h-full flex items-center justify-center p-12">
+              <div className="relative w-full h-full flex items-center  justify-center p-12">
                 <Image
                   src={category.image}
                   alt={category.name}
