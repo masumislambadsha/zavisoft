@@ -6,16 +6,16 @@ export default function Footer() {
   return (
     <footer className="relative max-w-[1320px] mx-auto">
       {/* Blue Newsletter Section */}
-      <div className="bg-[#4A69E2] px-8 py-16 rounded-t-[64px]">
-        <div className="flex justify-between items-start">
+      <div className="bg-[#4A69E2] px-12 py-20 rounded-t-[64px]">
+        <div className="max-w-7xl mx-auto flex justify-between items-center">
           {/* Left Side - Form */}
-          <div className="flex-1 max-w-md">
-            <h2 className="text-4xl lg:text-5xl font-black text-white mb-4 leading-tight uppercase">
+          <div className="flex-1 max-w-xl">
+            <h2 className="text-[48px] font-semibold text-white mb-4 leading-[100%] uppercase">
               Join our KicksPlus
               <br />
               Club & get 15% off
             </h2>
-            <p className="text-white text-sm mb-6">
+            <p className="text-white text-base mb-6">
               Sign up for free! Join the community.
             </p>
 
@@ -24,7 +24,7 @@ export default function Footer() {
               <input
                 type="email"
                 placeholder="Email address"
-                className="flex-1 px-5 py-3 rounded-lg bg-[#5A79F2] border-2 border-white/30 text-white placeholder:text-white/80 focus:outline-none focus:border-white text-sm"
+                className="flex-1 px-5 py-3 rounded-lg bg-[#5A79F2] border-2 border-white/30 text-white placeholder:text-white/70 focus:outline-none focus:border-white text-sm"
               />
               <button className="bg-[#232321] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#3A3A38] transition-colors uppercase text-sm">
                 Submit
@@ -34,10 +34,10 @@ export default function Footer() {
 
           {/* Right Side - Logo */}
           <div className="relative">
-            <h1 className="text-[120px] font-black text-white leading-none">
+            <h1 className="text-[160px] font-black text-white leading-none tracking-tight">
               KICKS
             </h1>
-            <div className="absolute top-2 right-0 w-8 h-8 bg-[#FFA52F] rounded-full"></div>
+            <div className="absolute -top-4 -right-4 w-10 h-10 bg-[#FFA52F] rounded-full"></div>
           </div>
         </div>
       </div>
