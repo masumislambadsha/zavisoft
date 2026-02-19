@@ -46,7 +46,7 @@ export default function NewDrops() {
 
   if (loading) {
     return (
-      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      <section className="py-12 px-4 sm:px-6 lg:px-8 ">
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-center items-center min-h-[400px]">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#4A69E2]"></div>
@@ -58,7 +58,7 @@ export default function NewDrops() {
 
   if (error) {
     return (
-      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      <section className="py-12 px-4 sm:px-6 lg:px-8 ">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col justify-center items-center min-h-[400px]">
             <p className="text-red-500 text-lg mb-4">Error: {error}</p>
@@ -76,7 +76,7 @@ export default function NewDrops() {
 
   if (products.length === 0) {
     return (
-      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      <section className="py-12 px-4 sm:px-6 lg:px-8 ">
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-center items-center min-h-[400px]">
             <p className="text-gray-500 text-lg">No products available</p>
@@ -87,7 +87,7 @@ export default function NewDrops() {
   }
 
   return (
-    <section className="py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
+    <section className="py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="flex justify-between items-center mb-8">
