@@ -56,14 +56,14 @@ export default function Navbar() {
               className="text-gray-700 hover:text-gray-900 transition-colors"
               aria-label="Search"
             >
-              <Search className="w-5 h-5" />
+              <Search className="w-5 h-5 font-semibold"   />
             </button>
 
             <button
               className="text-gray-700 hover:text-gray-900 transition-colors"
               aria-label="Account"
             >
-              <User className="w-5 h-5" />
+              <User className="w-5 h-5" fill="black" />
             </button>
 
             <Link href="/cart" className="relative" aria-label="Shopping Cart">
