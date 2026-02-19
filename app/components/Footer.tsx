@@ -7,7 +7,7 @@ export default function Footer() {
     <footer className="relative max-w-[1320px] mx-auto">
       {/* Blue Newsletter Section */}
       <div className="bg-[#4A69E2] px-12 py-20 rounded-t-[64px]">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
+        <div className="flex justify-between items-center">
           {/* Left Side - Form */}
           <div className="flex-1 max-w-xl">
             <h2 className="text-[48px] font-semibold text-white mb-4 leading-[100%] uppercase">
@@ -34,10 +34,13 @@ export default function Footer() {
 
           {/* Right Side - Logo */}
           <div className="relative">
-            <h1 className="text-[160px] font-black text-white leading-none tracking-tight">
-              KICKS
-            </h1>
-            <div className="absolute -top-4 -right-4 w-10 h-10 bg-[#FFA52F] rounded-full"></div>
+              <Image
+                alt="Plus Icon"
+                src="/plusIcon.png"
+                height={88}
+                width={351}
+                className="object-contain md:-mt-8"
+              />
           </div>
         </div>
       </div>
