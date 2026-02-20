@@ -46,23 +46,27 @@ export default async function ProductPage({
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Image Gallery */}
-          <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              {product.images.slice(0, 4).map((image, index) => (
-                <div
-                  key={index}
-                  className={`relative ${
-                    index === 0 ? "col-span-2 h-96" : "h-64"
-                  } bg-white rounded-lg overflow-hidden`}
-                >
-                  <Image
-                    src={image}
-                    alt={`${product.title} - Image ${index + 1}`}
-                    fill
-                    className="object-contain p-4"
-                  />
-                </div>
-              ))}
+          <div className="grid grid-cols-2 gap-4">
+            {product.images.slice(0, 3).map((image, index) => (
+              <div
+                key={index}
+                className="relative  bg-white rounded-lg overflow-hidden"
+              >
+                <Image
+                  src={image}
+                  alt={`${product.title} - Image ${index + 1}`}
+                  fill
+                  className="object-contain p-4"
+                />
+              </div>
+            ))}
+            <div className="relative  bg-white rounded-lg overflow-hidden">
+              <Image
+                src={product.images[0]}
+                alt={`${product.title} - Main`}
+                fill
+                className="object-contain p-4"
+              />
             </div>
           </div>
 
