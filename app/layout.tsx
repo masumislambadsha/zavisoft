@@ -23,6 +23,11 @@ const openSans = Open_Sans({
 export const metadata: Metadata = {
   title: "KICKS - Premium Sneakers Store",
   description: "Shop the latest sneaker drops and exclusive collections",
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
