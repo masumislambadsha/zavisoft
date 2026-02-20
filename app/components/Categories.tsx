@@ -53,10 +53,10 @@ export default function Categories() {
 
   if (loading) {
     return (
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-[#232321]">
+      <section className="py-10 md:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 bg-[#232321]">
         <div className="max-w-7xl mx-auto">
-          <div className="flex justify-center items-center min-h-[400px]">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+          <div className="flex justify-center items-center min-h-[300px] md:min-h-[400px]">
+            <div className="animate-spin rounded-full h-10 w-10 md:h-12 md:w-12 border-b-2 border-white"></div>
           </div>
         </div>
       </section>
@@ -65,13 +65,15 @@ export default function Categories() {
 
   if (error) {
     return (
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-[#232321]">
+      <section className="py-10 md:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 bg-[#232321]">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col justify-center items-center min-h-[400px]">
-            <p className="text-red-500 text-lg mb-4">Error: {error}</p>
+          <div className="flex flex-col justify-center items-center min-h-[300px] md:min-h-[400px]">
+            <p className="text-red-500 text-base md:text-lg mb-4">
+              Error: {error}
+            </p>
             <button
               onClick={() => window.location.reload()}
-              className="bg-white text-[#232321] px-6 py-2 rounded-lg hover:bg-gray-200 transition-colors"
+              className="bg-white text-[#232321] px-5 md:px-6 py-2 rounded-lg hover:bg-gray-200 transition-colors text-sm md:text-base"
             >
               Try Again
             </button>
@@ -83,10 +85,12 @@ export default function Categories() {
 
   if (categories.length === 0) {
     return (
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-[#232321]">
+      <section className="py-10 md:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 bg-[#232321]">
         <div className="max-w-7xl mx-auto">
-          <div className="flex justify-center items-center min-h-[400px]">
-            <p className="text-white text-lg">No categories available</p>
+          <div className="flex justify-center items-center min-h-[300px] md:min-h-[400px]">
+            <p className="text-white text-base md:text-lg">
+              No categories available
+            </p>
           </div>
         </div>
       </section>
@@ -97,50 +101,50 @@ export default function Categories() {
   const bgColors = ["#ECEEF0", "#F6F6F6"];
 
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 bg-[#232321]">
+    <section className="py-10 md:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 bg-[#232321]">
       <div className="max-w-7xl mx-auto">
-        {/* Section Header */}
-        <div className="flex justify-between items-center mb-10">
-          <h2 className="text-5xl lg:text-6xl font-black text-white uppercase">
+        {/* section header */}
+        <div className="flex justify-between items-center mb-6 md:mb-8 lg:mb-10">
+          <h2 className="text-2xl md:text-5xl lg:text-6xl font-semibold md:font-black text-white md:uppercase">
             Categories
           </h2>
 
-          {/* Navigation Arrows - Gray and White */}
+          {/* navigation */}
           <div className="flex gap-2">
             <button
               onClick={handlePrev}
-              className="w-12 h-12 rounded-xl bg-[#707070] hover:bg-[#606060] flex items-center justify-center transition-colors"
+              className="w-8 h-8 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-[#707070] hover:bg-[#606060] flex items-center justify-center transition-colors"
               aria-label="Previous"
             >
               <ChevronLeft
-                className="w-5 h-5 text-[#232321]"
+                className="w-4 h-4 md:w-5 md:h-5 text-[#232321]"
                 strokeWidth={2.5}
               />
             </button>
             <button
               onClick={handleNext}
-              className="w-12 h-12 rounded-xl bg-white hover:bg-gray-100 flex items-center justify-center transition-colors"
+              className="w-8 h-8 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-white hover:bg-gray-100 flex items-center justify-center transition-colors"
               aria-label="Next"
             >
               <ChevronRight
-                className="w-5 h-5 text-[#232321]"
+                className="w-4 h-4 md:w-5 md:h-5 text-[#232321]"
                 strokeWidth={2.5}
               />
             </button>
           </div>
         </div>
 
-        {/* Categories Container - Single container with only top-left rounded */}
-        <div className="flex rounded-tl-[48px] overflow-hidden shadow-lg ml-4">
+        {/* category container */}
+        <div className="flex flex-col md:flex-row rounded-tl-[32px] md:rounded-tl-[40px] lg:rounded-tl-[48px] overflow-hidden shadow-lg ml-2 md:ml-4">
           {visibleCategories.map((category, index) => (
             <Link
               key={category.id}
               href={`/categories/${category.id}`}
-              className="group relative flex-1 h-[600px] hover:shadow-xl transition-all"
+              className="group relative flex-1 h-[400px] sm:h-[500px] md:h-[550px] lg:h-[600px] hover:shadow-xl transition-all"
               style={{ backgroundColor: bgColors[index] }}
             >
-              {/* Category Image */}
-              <div className="relative w-full h-full flex items-center  justify-center p-12">
+              {/* category img */}
+              <div className="relative w-full h-full flex items-center justify-center p-6 sm:p-8 md:p-10 lg:p-12">
                 <Image
                   src={category.image}
                   alt={category.name}
@@ -150,16 +154,16 @@ export default function Categories() {
                 />
               </div>
 
-              {/* Category Info - Bottom Left */}
-              <div className="absolute bottom-8 left-8 right-8 flex justify-between items-end">
-                <h3 className="text-3xl lg:text-4xl font-black text-[#232321] uppercase">
+              {/*  info - bottom left */}
+              <div className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-4 sm:left-6 md:left-8 right-4 sm:right-6 md:right-8 flex justify-between items-end">
+                <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-[#232321] uppercase">
                   {category.name}
                 </h3>
 
-                {/* Arrow Icon */}
-                <div className="w-12 h-12 rounded-xl bg-[#232321] flex items-center justify-center group-hover:bg-[#3A3A38] transition-colors flex-shrink-0">
+                {/* arrow icon */}
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-[#232321] flex items-center justify-center group-hover:bg-[#3A3A38] transition-colors shrink-0">
                   <ArrowUpRight
-                    className="w-6 h-6 text-white"
+                    className="w-5 h-5 md:w-6 md:h-6 text-white"
                     strokeWidth={2.5}
                   />
                 </div>

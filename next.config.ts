@@ -10,6 +10,13 @@ const nextConfig: NextConfig = {
         pathname: '/**',
         search: '',
       },
+      {
+        protocol: 'https',
+        hostname: 'placeimg.com',
+        port: '',
+        pathname: '/**',
+        search: '',
+      },
     ],
   },
 };

@@ -31,43 +31,43 @@ const reviews = [
 
 export default function Reviews() {
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 ">
+    <section className="py-10 md:py-12 lg:py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        {/* Section Header */}
-        <div className="flex justify-between items-center mb-10">
-          <h2 className="text-5xl lg:text-6xl font-black text-[#232321] uppercase">
+        {/* section header */}
+        <div className="flex justify-between items-start sm:items-center mb-6 md:mb-8 lg:mb-10 gap-4">
+          <h2 className="text-2xl md:text-5xl lg:text-6xl font-semibold md:font-black text-[#232321] md:uppercase">
             Reviews
           </h2>
 
           <Link
             href="/reviews"
-            className="bg-[#4A69E2] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#3A59D2] transition-colors text-sm uppercase"
+            className="bg-[#4A69E2] text-white px-5 md:px-6 py-2.5 md:py-3 rounded-lg font-medium md:font-semibold hover:bg-[#3A59D2] transition-colors text-xs md:text-sm uppercase whitespace-nowrap"
           >
             See All
           </Link>
         </div>
 
-        {/* Reviews Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* reviews grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {reviews.map((review) => (
             <div
               key={review.id}
-              className="bg-[#FAFAFA] rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+              className="bg-[#FAFAFA] rounded-2xl md:rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
             >
-              {/* Review Header */}
-              <div className="p-6 pb-4">
-                <div className="flex justify-between items-start mb-3">
+              {/* review head */}
+              <div className="p-4 sm:p-5 md:p-6 pb-3 md:pb-4">
+                <div className="flex justify-between items-start mb-2 md:mb-3">
                   <div>
-                    <h3 className="text-xl font-bold text-[#232321] mb-1">
+                    <h3 className="text-lg md:text-xl font-bold text-[#232321] mb-1">
                       {review.title}
                     </h3>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-xs md:text-sm text-gray-600">
                       {review.description}
                     </p>
                   </div>
 
-                  {/* Avatar */}
-                  <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 ml-3">
+                  {/* profile pic */}
+                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden shrink-0 ml-3">
                     <Image
                       src={review.avatar}
                       alt="Reviewer"
@@ -78,22 +78,22 @@ export default function Reviews() {
                   </div>
                 </div>
 
-                {/* Rating */}
+                {/* rating */}
                 <div className="flex items-center gap-1">
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
-                      className="w-4 h-4 fill-[#FFA52F] text-[#FFA52F]"
+                      className="w-3.5 h-3.5 md:w-4 md:h-4 fill-[#FFA52F] text-[#FFA52F]"
                     />
                   ))}
-                  <span className="text-sm font-semibold text-[#232321] ml-1">
+                  <span className="text-xs md:text-sm font-semibold text-[#232321] ml-1">
                     {review.rating}
                   </span>
                 </div>
               </div>
 
-              {/* Review Image */}
-              <div className="relative h-64">
+              {/* review img */}
+              <div className="relative h-48 sm:h-56 md:h-64">
                 <Image
                   src={review.image}
                   alt={review.title}
