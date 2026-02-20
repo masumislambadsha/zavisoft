@@ -33,7 +33,7 @@ export default function WishlistPage() {
   };
 
   const handleMoveToCart = (item: (typeof wishlist)[0]) => {
-    // Add to cart with default size and color
+
     addToCart({
       id: item.id,
       title: item.title,
