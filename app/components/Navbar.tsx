@@ -2,11 +2,13 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Search, User, Triangle } from "lucide-react";
+import { Search, User, Triangle, Heart } from "lucide-react";
 import { useCart } from "../context/CartContext";
+import { useWishlist } from "../context/WishlistContext";
 
 export default function Navbar() {
   const { cartCount } = useCart();
+  const { wishlistCount } = useWishlist();
 
   return (
     <nav className="sticky top-0 z-50 pt-4 md:pt-6 lg:pt-10 px-4">
@@ -146,6 +148,17 @@ export default function Navbar() {
             >
               <User className="w-5 h-5 md:w-5 md:h-5" fill="black" />
             </button>
+
+            <Link href="/wishlist" className="relative" aria-label="Wishlist">
+              <div className="relative">
+                <Heart className="w-5 h-5 md:w-6 md:h-6 text-gray-700 hover:text-red-600 transition-colors" />
+                {wishlistCount > 0 && (
+                  <span className="absolute -top-2 -right-2 w-5 h-5 bg-red-600 text-white text-xs font-bold rounded-full flex items-center justify-center">
+                    {wishlistCount}
+                  </span>
+                )}
+              </div>
+            </Link>
 
             <Link href="/cart" className="relative" aria-label="Shopping Cart">
               <div className="w-8 h-8 md:w-9 md:h-9 lg:w-10 lg:h-10 rounded-full bg-orange-400 flex items-center justify-center text-white font-bold text-xs md:text-sm hover:bg-orange-500 transition-colors">

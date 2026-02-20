@@ -15,7 +15,7 @@ export default function Hero() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Title animation
+
       gsap.from(titleRef.current?.children || [], {
         y: 100,
         opacity: 0,
@@ -24,7 +24,7 @@ export default function Hero() {
         ease: "power3.out",
       });
 
-      // Hero image animation
+
       gsap.from(heroRef.current, {
         scale: 0.9,
         opacity: 0,
@@ -33,7 +33,7 @@ export default function Hero() {
         ease: "power3.out",
       });
 
-      // Content animation
+   
       gsap.from(contentRef.current?.children || [], {
         y: 50,
         opacity: 0,

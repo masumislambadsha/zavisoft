@@ -5,6 +5,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useCart } from "@/app/context/CartContext";
+import { useWishlist } from "@/app/context/WishlistContext";
 import toast from "react-hot-toast";
 import RelatedProducts from "@/app/components/RelatedProducts";
 
@@ -41,8 +42,8 @@ export default function ProductPage({
   const [loading, setLoading] = useState(true);
   const [selectedColor, setSelectedColor] = useState<string>("navy");
   const [selectedSize, setSelectedSize] = useState<number | null>(null);
-  const [isWishlisted, setIsWishlisted] = useState(false);
   const { addToCart } = useCart();
+  const { isInWishlist, toggleWishlist } = useWishlist();
 
   useEffect(() => {
     async function loadProduct() {
@@ -97,11 +98,28 @@ export default function ProductPage({
     toast.success("Added to cart successfully!");
   };
 
+  const handleToggleWishlist = () => {
+    toggleWishlist({
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      image: product.images[0],
+    });
+
+    if (isInWishlist(product.id)) {
+      toast.success("Removed from wishlist");
+    } else {
+      toast.success("Added to wishlist!");
+    }
+  };
+
+  const isProductInWishlist = isInWishlist(product.id);
+
   return (
     <div className="min-h-screen">
       <div className="max-w-[1320px] mx-auto px-4 py-4 md:py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
-          {/* Image Gallery */}
+          {/* imgs */}
           <div className="grid grid-cols-2 lg:col-span-2 gap-3 md:gap-4">
             {product.images.slice(0, 3).map((image, index) => (
               <div
@@ -126,7 +144,7 @@ export default function ProductPage({
             </div>
           </div>
 
-          {/* Product Details */}
+          {/* details */}
           <div className="space-y-4 md:space-y-6">
             <div className="inline-block bg-blue-600 text-white px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-sm font-medium">
               New Release
@@ -140,7 +158,7 @@ export default function ProductPage({
               ${product.price}
             </div>
 
-            {/* Color Selection */}
+            {/* color select */}
             <div>
               <h3 className="text-xs md:text-sm font-semibold text-gray-900 mb-2 md:mb-3">
                 COLOR
@@ -161,7 +179,7 @@ export default function ProductPage({
               </div>
             </div>
 
-            {/* Size Selection */}
+            {/* size select */}
             <div>
               <div className="flex justify-between items-center mb-2 md:mb-3">
                 <h3 className="text-xs md:text-sm font-semibold text-gray-900">
@@ -188,7 +206,7 @@ export default function ProductPage({
               </div>
             </div>
 
-            {/* Action Buttons */}
+            {/* action btn */}
             <div className="flex gap-2 md:gap-3">
               <button
                 onClick={handleAddToCart}
@@ -197,17 +215,21 @@ export default function ProductPage({
                 ADD TO CART
               </button>
               <button
-                onClick={() => setIsWishlisted(!isWishlisted)}
+                onClick={handleToggleWishlist}
                 className={`w-12 h-12 md:w-14 md:h-14 rounded-lg flex items-center justify-center transition-colors ${
-                  isWishlisted
+                  isProductInWishlist
                     ? "bg-red-600 text-white hover:bg-red-700"
                     : "bg-gray-900 text-white hover:bg-gray-800"
                 }`}
-                aria-label="Add to wishlist"
+                aria-label={
+                  isProductInWishlist
+                    ? "Remove from wishlist"
+                    : "Add to wishlist"
+                }
               >
                 <svg
                   className="w-5 h-5 md:w-6 md:h-6"
-                  fill={isWishlisted ? "currentColor" : "none"}
+                  fill={isProductInWishlist ? "currentColor" : "none"}
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
@@ -225,7 +247,7 @@ export default function ProductPage({
               BUY IT NOW
             </button>
 
-            {/* Product Information */}
+            {/* infos */}
             <div className="border-t pt-4 md:pt-6">
               <h3 className="text-base md:text-lg font-bold text-gray-900 mb-2">
                 ABOUT THE PRODUCT
@@ -254,7 +276,7 @@ export default function ProductPage({
           </div>
         </div>
 
-        {/* You may also like section */}
+        {/* related products */}
         <RelatedProducts
           categoryId={product.category.id}
           currentProductId={product.id}

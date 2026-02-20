@@ -32,7 +32,7 @@ export default function Categories() {
           "https://api.escuelajs.co/api/v1/categories",
         );
 
-        // Filter out categories with valid images
+        
         const validCategories = response.data.filter(
           (cat: Category) => cat.image && cat.image.startsWith("http"),
         );

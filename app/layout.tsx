@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { CartProvider } from "./context/CartContext";
+import { WishlistProvider } from "./context/WishlistContext";
 import { Toaster } from "react-hot-toast";
 import SmoothScroll from "./components/SmoothScroll";
 
@@ -36,26 +37,28 @@ export default function RootLayout({
       >
         <SmoothScroll>
           <CartProvider>
-            <Toaster
-              position="top-center"
-              toastOptions={{
-                duration: 3000,
-                style: {
-                  background: "#363636",
-                  color: "#fff",
-                },
-                success: {
-                  duration: 2500,
-                  iconTheme: {
-                    primary: "#4ade80",
-                    secondary: "#fff",
+            <WishlistProvider>
+              <Toaster
+                position="top-center"
+                toastOptions={{
+                  duration: 3000,
+                  style: {
+                    background: "#363636",
+                    color: "#fff",
                   },
-                },
-              }}
-            />
-            <Navbar />
-            {children}
-            <Footer />
+                  success: {
+                    duration: 2500,
+                    iconTheme: {
+                      primary: "#4ade80",
+                      secondary: "#fff",
+                    },
+                  },
+                }}
+              />
+              <Navbar />
+              {children}
+              <Footer />
+            </WishlistProvider>
           </CartProvider>
         </SmoothScroll>
       </body>

@@ -13,7 +13,7 @@ export default function SmoothScroll({
   children: React.ReactNode;
 }) {
   useEffect(() => {
-    // Initialize Lenis
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -25,7 +25,7 @@ export default function SmoothScroll({
       infinite: false,
     });
 
-    // Connect Lenis with GSAP ScrollTrigger
+
     lenis.on("scroll", ScrollTrigger.update);
 
     gsap.ticker.add((time) => {
@@ -34,7 +34,7 @@ export default function SmoothScroll({
 
     gsap.ticker.lagSmoothing(0);
 
-    // Cleanup
+
     return () => {
       lenis.destroy();
       gsap.ticker.remove(() => {});

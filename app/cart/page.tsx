@@ -60,7 +60,6 @@ export default function CartPage() {
   return (
     <div className="min-h-screen bg-[#e7e7e3] py-4 sm:py-8">
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6">
-        {/* Header Banner */}
         <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 mb-4 sm:mb-6">
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-2">
             Saving to celebrate
@@ -81,7 +80,7 @@ export default function CartPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
-          {/* Your Bag */}
+
           <div className="lg:col-span-2">
             <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8">
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2">
@@ -98,7 +97,7 @@ export default function CartPage() {
                     key={`${item.id}-${item.size}-${item.color}`}
                     className="flex flex-col sm:flex-row gap-4 sm:gap-6 pb-4 sm:pb-6 border-b last:border-b-0"
                   >
-                    {/* Product Image */}
+
                     <div className="relative w-full sm:w-32 h-40 sm:h-32 md:w-40 md:h-40 bg-gray-100 rounded-xl sm:rounded-2xl shrink-0">
                       <Image
                         src={item.image}
@@ -108,7 +107,7 @@ export default function CartPage() {
                       />
                     </div>
 
-                    {/* Product Details */}
+
                     <div className="flex-1">
                       <div className="flex justify-between items-start mb-3">
                         <div className="flex-1 pr-2">
@@ -218,7 +217,7 @@ export default function CartPage() {
             </div>
           </div>
 
-          {/* Order Summary */}
+
           <div className="lg:col-span-1">
             <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 lg:sticky lg:top-24">
               <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-4 sm:mb-6">
@@ -273,8 +272,6 @@ export default function CartPage() {
             </div>
           </div>
         </div>
-
-        {/* You may also like section */}
         <RelatedProducts limit={4} />
       </div>
     </div>

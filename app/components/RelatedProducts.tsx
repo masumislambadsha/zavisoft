@@ -38,7 +38,7 @@ export default function RelatedProducts({
 
         const res = await axios.get(url);
         const data = res.data;
-        // Filter out current product if provided
+  
         const filtered = currentProductId
           ? data.filter((p: Product) => p.id !== currentProductId)
           : data;
