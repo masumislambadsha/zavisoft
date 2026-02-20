@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { useEffect, useState } from "react";
 
 interface Product {
   id: number;
@@ -22,31 +25,69 @@ async function getProduct(id: string): Promise<Product | null> {
 
     if (!res.ok) return null;
     return res.json();
-  } catch (error) {
+  } catch {
     return null;
   }
 }
 
-export default async function ProductPage({
+export default function ProductPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const { id } = await params;
-  const product = await getProduct(id);
+  const [product, setProduct] = useState<Product | null>(null);
+  const [selectedColor, setSelectedColor] = useState<string>("navy");
+  const [selectedSize, setSelectedSize] = useState<number | null>(null);
+  const [isWishlisted, setIsWishlisted] = useState(false);
+
+  useEffect(() => {
+    async function loadProduct() {
+      const { id } = await params;
+      const data = await getProduct(id);
+      if (!data) {
+        notFound();
+      }
+      setProduct(data);
+    }
+    loadProduct();
+  }, [params]);
 
   if (!product) {
-    notFound();
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
   }
 
   const sizes = [38, 39, 40, 41, 42, 43, 44, 45, 46, 47];
+  const colors = [
+    { name: "navy", color: "bg-gray-800" },
+    { name: "green", color: "bg-green-700" },
+  ];
+
+  const handleAddToCart = () => {
+    if (!selectedSize) {
+      alert("Please select a size");
+      return;
+    }
+    // Cart functionality will be implemented later with context
+    console.log("Add to cart:", {
+      product: product.title,
+      color: selectedColor,
+      size: selectedSize,
+    });
+  };
 
   return (
     <div className="min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="max-w-[1320px] mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Image Gallery */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 col-span-2 gap-4">
             {product.images.slice(0, 3).map((image, index) => (
               <div
                 key={index}
@@ -90,8 +131,18 @@ export default async function ProductPage({
                 COLOR
               </h3>
               <div className="flex gap-3">
-                <button className="w-10 h-10 rounded-full bg-gray-800 border-2 border-gray-900 ring-2 ring-offset-2 ring-gray-900"></button>
-                <button className="w-10 h-10 rounded-full bg-green-700 border-2 border-gray-300"></button>
+                {colors.map((color) => (
+                  <button
+                    key={color.name}
+                    onClick={() => setSelectedColor(color.name)}
+                    className={`w-10 h-10 rounded-full ${color.color} border-2 transition-all ${
+                      selectedColor === color.name
+                        ? "border-gray-900 ring-2 ring-offset-2 ring-gray-900"
+                        : "border-gray-300 hover:border-gray-500"
+                    }`}
+                    aria-label={`Select ${color.name} color`}
+                  ></button>
+                ))}
               </div>
             </div>
 
@@ -99,7 +150,7 @@ export default async function ProductPage({
             <div>
               <div className="flex justify-between items-center mb-3">
                 <h3 className="text-sm font-semibold text-gray-900">SIZE</h3>
-                <button className="text-sm text-gray-600 underline">
+                <button className="text-sm text-gray-600 underline hover:text-gray-900">
                   SIZE CHART
                 </button>
               </div>
@@ -107,8 +158,9 @@ export default async function ProductPage({
                 {sizes.map((size) => (
                   <button
                     key={size}
+                    onClick={() => setSelectedSize(size)}
                     className={`py-3 px-4 border rounded-lg text-sm font-medium transition-colors ${
-                      size === 38
+                      selectedSize === size
                         ? "bg-gray-900 text-white border-gray-900"
                         : "bg-white text-gray-900 border-gray-300 hover:border-gray-900"
                     }`}
@@ -121,13 +173,24 @@ export default async function ProductPage({
 
             {/* Action Buttons */}
             <div className="flex gap-3">
-              <button className="flex-1 bg-gray-900 text-white py-4 rounded-lg font-semibold hover:bg-gray-800 transition-colors">
+              <button
+                onClick={handleAddToCart}
+                className="flex-1 bg-gray-900 text-white py-4 rounded-lg font-semibold hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
                 ADD TO CART
               </button>
-              <button className="w-14 h-14 bg-gray-900 text-white rounded-lg flex items-center justify-center hover:bg-gray-800 transition-colors">
+              <button
+                onClick={() => setIsWishlisted(!isWishlisted)}
+                className={`w-14 h-14 rounded-lg flex items-center justify-center transition-colors ${
+                  isWishlisted
+                    ? "bg-red-600 text-white hover:bg-red-700"
+                    : "bg-gray-900 text-white hover:bg-gray-800"
+                }`}
+                aria-label="Add to wishlist"
+              >
                 <svg
                   className="w-6 h-6"
-                  fill="none"
+                  fill={isWishlisted ? "currentColor" : "none"}
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
