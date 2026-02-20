@@ -101,7 +101,7 @@ export default function ProductPage({
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       <div className="max-w-[1320px] mx-auto px-4 py-4 md:py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
           {/* Image Gallery */}
@@ -109,7 +109,7 @@ export default function ProductPage({
             {product.images.slice(0, 3).map((image, index) => (
               <div
                 key={index}
-                className="relative h-40 sm:h-48 md:h-64 lg:h-72 xl:h-80 bg-white rounded-lg overflow-hidden"
+                className="relative h-40 md:h-auto bg-white rounded-lg overflow-hidden"
               >
                 <Image
                   src={image}
@@ -119,7 +119,7 @@ export default function ProductPage({
                 />
               </div>
             ))}
-            <div className="relative h-40 sm:h-48 md:h-64 lg:h-72 xl:h-80 bg-white rounded-lg overflow-hidden">
+            <div className="relative h-40 md:h-auto bg-white rounded-lg overflow-hidden">
               <Image
                 src={product.images[0]}
                 alt={`${product.title} - Main`}
