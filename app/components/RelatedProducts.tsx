@@ -24,25 +24,37 @@ interface RelatedProductsProps {
 export default function RelatedProducts({
   categoryId,
   currentProductId,
-  limit = 4,
+  limit = 8,
 }: RelatedProductsProps) {
   const [products, setProducts] = useState<Product[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   useEffect(() => {
     async function fetchProducts() {
       try {
-        let url = "https://api.escuelajs.co/api/v1/products?limit=12";
+        let url = `https://api.escuelajs.co/api/v1/products?limit=${limit}`;
         if (categoryId) {
-          url = `https://api.escuelajs.co/api/v1/products?categoryId=${categoryId}&limit=12`;
+          url = `https://api.escuelajs.co/api/v1/products?categoryId=${categoryId}&limit=${limit}`;
         }
 
         const res = await axios.get(url);
         const data = res.data;
-
         const filtered = currentProductId
           ? data.filter((p: Product) => p.id !== currentProductId)
           : data;
-        setProducts(filtered.slice(0, limit));
+        setProducts(filtered);
       } catch {
         console.log("Failed to load related products");
       }
@@ -54,6 +66,31 @@ export default function RelatedProducts({
     return null;
   }
 
+  const handlePrev = () => {
+    if (isMobile) {
+      setCurrentIndex((prev) => Math.max(0, prev - 4));
+    } else {
+      const container = document.getElementById("related-scroll");
+      if (container) {
+        container.scrollBy({ left: -300, behavior: "smooth" });
+      }
+    }
+  };
+
+  const handleNext = () => {
+    if (isMobile) {
+      setCurrentIndex((prev) => Math.min(products.length - 4, prev + 4));
+    } else {
+      const container = document.getElementById("related-scroll");
+      if (container) {
+        container.scrollBy({ left: 300, behavior: "smooth" });
+      }
+    }
+  };
+  const visibleProducts = isMobile
+    ? products.slice(currentIndex, currentIndex + 4)
+    : products;
+
   return (
     <div className="mt-12 md:mt-16">
       <div className="flex items-center justify-between mb-4 md:mb-6">
@@ -62,16 +99,10 @@ export default function RelatedProducts({
         </h2>
         <div className="flex gap-2">
           <button
-            onClick={() => {
-              const container = document.getElementById("related-scroll");
-              if (container) {
-                const scrollAmount =
-                  window.innerWidth < 768 ? container.clientWidth : 300;
-                container.scrollBy({ left: -scrollAmount, behavior: "smooth" });
-              }
-            }}
-            className="w-9 h-9 md:w-10 md:h-10 bg-gray-200 hover:bg-gray-300 text-gray-900 rounded-lg flex items-center justify-center transition-colors"
-            aria-label="Scroll left"
+            onClick={handlePrev}
+            disabled={isMobile && currentIndex === 0}
+            className="w-9 h-9 md:w-10 md:h-10 bg-gray-900 hover:bg-gray-800 text-white rounded-lg flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            aria-label="Previous"
           >
             <svg
               className="w-4 h-4 md:w-5 md:h-5"
@@ -88,16 +119,10 @@ export default function RelatedProducts({
             </svg>
           </button>
           <button
-            onClick={() => {
-              const container = document.getElementById("related-scroll");
-              if (container) {
-                const scrollAmount =
-                  window.innerWidth < 768 ? container.clientWidth : 300;
-                container.scrollBy({ left: scrollAmount, behavior: "smooth" });
-              }
-            }}
-            className="w-9 h-9 md:w-10 md:h-10 bg-gray-900 hover:bg-gray-800 text-white rounded-lg flex items-center justify-center transition-colors"
-            aria-label="Scroll right"
+            onClick={handleNext}
+            disabled={isMobile && currentIndex >= products.length - 4}
+            className="w-9 h-9 md:w-10 md:h-10 bg-gray-900 hover:bg-gray-800 text-white rounded-lg flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            aria-label="Next"
           >
             <svg
               className="w-4 h-4 md:w-5 md:h-5"
@@ -115,19 +140,15 @@ export default function RelatedProducts({
           </button>
         </div>
       </div>
-
-      {/* Mobile: 2-column grid with horizontal scroll, Desktop: horizontal scroll */}
       <div
         id="related-scroll"
-        className="grid grid-cols-2 md:flex gap-3 md:gap-4 overflow-x-auto scrollbar-hide scroll-smooth pb-4 snap-x snap-mandatory"
+        className="grid grid-cols-2 md:flex gap-3 md:gap-4 md:overflow-x-auto scrollbar-hide scroll-smooth pb-4"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
-        {products.map((product, index) => (
+        {visibleProducts.map((product) => (
           <div
             key={product.id}
-            className={`bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow md:shrink-0 md:w-64 snap-start ${
-              index >= 2 ? "md:block" : ""
-            }`}
+            className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow md:shrink-0 md:w-64"
           >
             <div className="relative">
               <span className="absolute top-2 left-2 md:top-3 md:left-3 bg-blue-600 text-white text-xs font-semibold px-2 md:px-3 py-1 rounded-full z-10">
@@ -139,6 +160,7 @@ export default function RelatedProducts({
                   alt={product.title}
                   fill
                   className="object-contain p-3 md:p-4"
+                  unoptimized
                 />
               </div>
             </div>
