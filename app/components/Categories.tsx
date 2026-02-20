@@ -1,9 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface Category {
   id: number;
@@ -16,6 +20,8 @@ export default function Categories() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     async function fetchCategories() {
@@ -40,6 +46,37 @@ export default function Categories() {
 
     fetchCategories();
   }, []);
+
+  useEffect(() => {
+    if (!loading && categories.length > 0) {
+      const ctx = gsap.context(() => {
+        gsap.from(headerRef.current, {
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+          },
+          y: 50,
+          opacity: 0,
+          duration: 0.8,
+          ease: "power3.out",
+        });
+
+        gsap.from(".category-card", {
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 70%",
+          },
+          y: 80,
+          opacity: 0,
+          duration: 1,
+          stagger: 0.2,
+          ease: "power3.out",
+        });
+      }, sectionRef);
+
+      return () => ctx.revert();
+    }
+  }, [loading, categories]);
 
   const handlePrev = () => {
     setCurrentIndex((prev) =>
@@ -101,10 +138,16 @@ export default function Categories() {
   const bgColors = ["#ECEEF0", "#F6F6F6"];
 
   return (
-    <section className="py-10 md:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 bg-[#232321]">
+    <section
+      ref={sectionRef}
+      className="py-10 md:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 bg-[#232321]"
+    >
       <div className="max-w-7xl mx-auto">
         {/* section header */}
-        <div className="flex justify-between items-center mb-6 md:mb-8 lg:mb-10">
+        <div
+          ref={headerRef}
+          className="flex justify-between items-center mb-6 md:mb-8 lg:mb-10"
+        >
           <h2 className="text-2xl md:text-5xl lg:text-6xl font-semibold md:font-black text-white md:uppercase">
             Categories
           </h2>
@@ -140,7 +183,7 @@ export default function Categories() {
             <Link
               key={category.id}
               href={`/categories/${category.id}`}
-              className="group relative flex-1 h-[400px] sm:h-[500px] md:h-[550px] lg:h-[600px] hover:shadow-xl transition-all"
+              className="category-card group relative flex-1 h-[400px] sm:h-[500px] md:h-[550px] lg:h-[600px] hover:shadow-xl transition-all"
               style={{ backgroundColor: bgColors[index] }}
             >
               {/* category img */}

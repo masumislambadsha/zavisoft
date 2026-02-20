@@ -1,12 +1,60 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Hero() {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Title animation
+      gsap.from(titleRef.current?.children || [], {
+        y: 100,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.2,
+        ease: "power3.out",
+      });
+
+      // Hero image animation
+      gsap.from(heroRef.current, {
+        scale: 0.9,
+        opacity: 0,
+        duration: 1.2,
+        delay: 0.3,
+        ease: "power3.out",
+      });
+
+      // Content animation
+      gsap.from(contentRef.current?.children || [], {
+        y: 50,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        delay: 0.8,
+        ease: "power3.out",
+      });
+    });
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <section className="px-4 py-4 md:py-6 lg:px-8">
       <div className="max-w-[1320px] mx-auto">
         <div className="font-bold uppercase text">
-          <h1 className="font-bold text-6xl md:text-8xl lg:text-[220px] md:leading-[0.8] tracking-normal uppercase text-center">
+          <h1
+            ref={titleRef}
+            className="font-bold text-6xl md:text-8xl lg:text-[220px] md:leading-[0.8] tracking-normal uppercase text-center"
+          >
             <span className="text-[#232321] inline-block translate-y-[6px]">
               DO IT
             </span>{" "}
@@ -17,7 +65,10 @@ export default function Hero() {
         </div>
 
         {/* hero */}
-        <div className="relative mt-4 md:mt-6 lg:mt-10 rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl h-[380px] sm:h-[450px] md:h-[550px] lg:h-[650px] xl:h-[700px]">
+        <div
+          ref={heroRef}
+          className="relative mt-4 md:mt-6 lg:mt-10 rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl h-[380px] sm:h-[450px] md:h-[550px] lg:h-[650px] xl:h-[700px]"
+        >
           {/* bg-img */}
           <Image
             src="/hero-main.png"
@@ -34,7 +85,10 @@ export default function Hero() {
           </div>
 
           {/* bottom left content */}
-          <div className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-4 sm:left-6 md:left-8 z-10 max-w-xs md:max-w-md">
+          <div
+            ref={contentRef}
+            className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-4 sm:left-6 md:left-8 z-10 max-w-xs md:max-w-md"
+          >
             <h2 className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-semibold text-white mb-2 md:mb-3">
               NIKE AIR MAX
             </h2>

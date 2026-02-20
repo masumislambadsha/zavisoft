@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { CartProvider } from "./context/CartContext";
 import { Toaster } from "react-hot-toast";
+import SmoothScroll from "./components/SmoothScroll";
 
 const rubik = Rubik({
   variable: "--font-rubik",
@@ -25,28 +26,30 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${rubik.variable} font-sans antialiased bg-[#e7e7e3]`}>
-        <CartProvider>
-          <Toaster
-            position="top-center"
-            toastOptions={{
-              duration: 3000,
-              style: {
-                background: "#",
-                color: "#",
-              },
-              success: {
-                duration: 2500,
-                iconTheme: {
-                  primary: "#4ade80",
-                  secondary: "#fff",
+        <SmoothScroll>
+          <CartProvider>
+            <Toaster
+              position="top-center"
+              toastOptions={{
+                duration: 3000,
+                style: {
+                  background: "#363636",
+                  color: "#fff",
                 },
-              },
-            }}
-          />
-          <Navbar />
-          {children}
-          <Footer />
-        </CartProvider>
+                success: {
+                  duration: 2500,
+                  iconTheme: {
+                    primary: "#4ade80",
+                    secondary: "#fff",
+                  },
+                },
+              }}
+            />
+            <Navbar />
+            {children}
+            <Footer />
+          </CartProvider>
+        </SmoothScroll>
       </body>
     </html>
   );
