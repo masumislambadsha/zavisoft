@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useCart } from "@/app/context/CartContext";
+import toast from "react-hot-toast";
 
 interface Product {
   id: number;
@@ -40,6 +42,7 @@ export default function ProductPage({
   const [selectedColor, setSelectedColor] = useState<string>("navy");
   const [selectedSize, setSelectedSize] = useState<number | null>(null);
   const [isWishlisted, setIsWishlisted] = useState(false);
+  const { addToCart } = useCart();
 
   useEffect(() => {
     async function loadProduct() {
@@ -89,15 +92,18 @@ export default function ProductPage({
 
   const handleAddToCart = () => {
     if (!selectedSize) {
-      alert("Please select a size");
+      toast.error("Please select a size");
       return;
     }
-    // Cart functionality will be implemented later with context
-    console.log("Add to cart:", {
-      product: product.title,
+    addToCart({
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      image: product.images[0],
       color: selectedColor,
       size: selectedSize,
     });
+    toast.success("Added to cart successfully!");
   };
 
   return (

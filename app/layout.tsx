@@ -3,6 +3,8 @@ import { Rubik } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { CartProvider } from "./context/CartContext";
+import { Toaster } from "react-hot-toast";
 
 const rubik = Rubik({
   variable: "--font-rubik",
@@ -23,9 +25,28 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${rubik.variable} font-sans antialiased bg-[#e7e7e3]`}>
-        <Navbar />
-        {children}
-        <Footer />
+        <CartProvider>
+          <Toaster
+            position="top-center"
+            toastOptions={{
+              duration: 3000,
+              style: {
+                background: "#",
+                color: "#",
+              },
+              success: {
+                duration: 2500,
+                iconTheme: {
+                  primary: "#4ade80",
+                  secondary: "#fff",
+                },
+              },
+            }}
+          />
+          <Navbar />
+          {children}
+          <Footer />
+        </CartProvider>
       </body>
     </html>
   );

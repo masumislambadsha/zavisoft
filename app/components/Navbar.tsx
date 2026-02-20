@@ -3,10 +3,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Search, User, Triangle } from "lucide-react";
-import { useState } from "react";
+import { useCart } from "../context/CartContext";
 
 export default function Navbar() {
-  const [cartCount] = useState(0);
+  const { cartCount } = useCart();
 
   return (
     <nav className="sticky top-0 z-50 pt-4 md:pt-6 lg:pt-10 px-4">
