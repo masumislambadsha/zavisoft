@@ -36,18 +36,18 @@ export default function CartPage() {
 
   if (cart.length === 0) {
     return (
-      <div className="min-h-screen bg-[#e7e7e3] py-8">
-        <div className="max-w-[1320px] mx-auto px-4">
-          <div className="bg-white rounded-2xl p-8 md:p-12 text-center">
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">
+      <div className="min-h-screen bg-[#e7e7e3] py-4 sm:py-8">
+        <div className="max-w-[1320px] mx-auto px-4 sm:px-6">
+          <div className="bg-white rounded-xl sm:rounded-2xl p-6 sm:p-8 md:p-12 text-center">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">
               Your Bag is Empty
             </h1>
-            <p className="text-gray-600 mb-8">
+            <p className="text-sm sm:text-base text-gray-600 mb-6 sm:mb-8">
               Add some items to your bag to get started
             </p>
             <Link
               href="/"
-              className="inline-block bg-gray-900 text-white px-8 py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors"
+              className="inline-block bg-gray-900 text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors text-sm sm:text-base"
             >
               Continue Shopping
             </Link>
@@ -58,18 +58,18 @@ export default function CartPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#e7e7e3] py-8">
-      <div className="max-w-[1320px] mx-auto px-4">
+    <div className="min-h-screen bg-[#e7e7e3] py-4 sm:py-8">
+      <div className="max-w-[1320px] mx-auto px-4 sm:px-6">
         {/* Header Banner */}
-        <div className="bg-white rounded-2xl p-6 md:p-8 mb-6">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+        <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 mb-4 sm:mb-6">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-2">
             Saving to celebrate
           </h2>
-          <p className="text-gray-600 text-sm md:text-base mb-1">
+          <p className="text-gray-600 text-xs sm:text-sm md:text-base mb-1">
             Enjoy up to 60% off thousands of styles during the End of Year sale
             - while supplies last. No code needed.
           </p>
-          <p className="text-gray-600 text-sm">
+          <p className="text-gray-600 text-xs sm:text-sm">
             <Link href="/login" className="underline hover:text-gray-900">
               Join us
             </Link>{" "}
@@ -80,26 +80,26 @@ export default function CartPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
           {/* Your Bag */}
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-2xl p-6 md:p-8">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+            <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2">
                 Your Bag
               </h2>
-              <p className="text-gray-500 text-sm mb-8">
+              <p className="text-gray-500 text-xs sm:text-sm mb-6 sm:mb-8">
                 Items in your bag not reserved- check out now to make them
                 yours.
               </p>
 
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 {cart.map((item) => (
                   <div
                     key={`${item.id}-${item.size}-${item.color}`}
-                    className="flex gap-6 pb-6 border-b last:border-b-0"
+                    className="flex flex-col sm:flex-row gap-4 sm:gap-6 pb-4 sm:pb-6 border-b last:border-b-0"
                   >
                     {/* Product Image */}
-                    <div className="relative w-32 h-32 md:w-40 md:h-40 bg-gray-100 rounded-2xl shrink-0">
+                    <div className="relative w-full sm:w-32 h-40 sm:h-32 md:w-40 md:h-40 bg-gray-100 rounded-xl sm:rounded-2xl shrink-0">
                       <Image
                         src={item.image}
                         alt={item.title}
@@ -111,30 +111,30 @@ export default function CartPage() {
                     {/* Product Details */}
                     <div className="flex-1">
                       <div className="flex justify-between items-start mb-3">
-                        <div>
-                          <h3 className="font-bold text-gray-900 text-lg md:text-xl uppercase mb-1">
+                        <div className="flex-1 pr-2">
+                          <h3 className="font-bold text-gray-900 text-base sm:text-lg md:text-xl uppercase mb-1">
                             {item.title}
                           </h3>
-                          <p className="text-gray-500 text-sm mb-1">
+                          <p className="text-gray-500 text-xs sm:text-sm mb-1">
                             Men&apos;s Road Running Shoes
                           </p>
-                          <p className="text-gray-500 text-sm capitalize">
+                          <p className="text-gray-500 text-xs sm:text-sm capitalize">
                             {item.color}
                           </p>
                         </div>
-                        <p className="font-bold text-blue-600 text-xl md:text-2xl">
+                        <p className="font-bold text-blue-600 text-lg sm:text-xl md:text-2xl whitespace-nowrap">
                           ${item.price.toFixed(2)}
                         </p>
                       </div>
 
-                      <div className="flex items-center gap-6 mb-4">
+                      <div className="flex flex-wrap items-center gap-4 sm:gap-6 mb-4">
                         <div className="flex items-center gap-2">
-                          <span className="text-sm font-medium text-gray-900">
+                          <span className="text-xs sm:text-sm font-medium text-gray-900">
                             Size {item.size}
                           </span>
                           <button className="text-gray-400 hover:text-gray-600">
                             <svg
-                              className="w-4 h-4"
+                              className="w-3 h-3 sm:w-4 sm:h-4"
                               fill="none"
                               stroke="currentColor"
                               viewBox="0 0 24 24"
@@ -150,7 +150,7 @@ export default function CartPage() {
                         </div>
 
                         <div className="flex items-center gap-2">
-                          <span className="text-sm font-medium text-gray-900">
+                          <span className="text-xs sm:text-sm font-medium text-gray-900">
                             Quantity {item.quantity}
                           </span>
                           <select
@@ -163,7 +163,7 @@ export default function CartPage() {
                                 parseInt(e.target.value),
                               )
                             }
-                            className="text-gray-400 hover:text-gray-600 bg-transparent border-none cursor-pointer text-sm"
+                            className="text-gray-400 hover:text-gray-600 bg-transparent border-none cursor-pointer text-xs sm:text-sm"
                           >
                             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
                               <option key={num} value={num}>
@@ -174,10 +174,10 @@ export default function CartPage() {
                         </div>
                       </div>
 
-                      <div className="flex gap-4">
+                      <div className="flex gap-3 sm:gap-4">
                         <button className="text-gray-400 hover:text-gray-600 transition-colors">
                           <svg
-                            className="w-6 h-6"
+                            className="w-5 h-5 sm:w-6 sm:h-6"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -197,7 +197,7 @@ export default function CartPage() {
                           className="text-gray-400 hover:text-gray-600 transition-colors"
                         >
                           <svg
-                            className="w-6 h-6"
+                            className="w-5 h-5 sm:w-6 sm:h-6"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -220,46 +220,54 @@ export default function CartPage() {
 
           {/* Order Summary */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-2xl p-6 md:p-8 sticky top-24">
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
+            <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 lg:sticky lg:top-24">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-4 sm:mb-6">
                 Order Summary
               </h2>
 
-              <div className="space-y-4 mb-6">
+              <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
                 <div className="flex justify-between">
-                  <span className="text-gray-900 font-medium">
+                  <span className="text-sm sm:text-base text-gray-900 font-medium">
                     {cartCount} {cartCount === 1 ? "ITEM" : "ITEMS"}
                   </span>
-                  <span className="font-bold text-gray-900">
+                  <span className="text-sm sm:text-base font-bold text-gray-900">
                     ${cartTotal.toFixed(2)}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-900 font-medium">Delivery</span>
-                  <span className="font-bold text-gray-900">
+                  <span className="text-sm sm:text-base text-gray-900 font-medium">
+                    Delivery
+                  </span>
+                  <span className="text-sm sm:text-base font-bold text-gray-900">
                     ${deliveryFee.toFixed(2)}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-900 font-medium">Sales Tax</span>
-                  <span className="font-bold text-gray-900">-</span>
+                  <span className="text-sm sm:text-base text-gray-900 font-medium">
+                    Sales Tax
+                  </span>
+                  <span className="text-sm sm:text-base font-bold text-gray-900">
+                    -
+                  </span>
                 </div>
               </div>
 
-              <div className="border-t border-gray-200 pt-4 mb-6">
+              <div className="border-t border-gray-200 pt-3 sm:pt-4 mb-4 sm:mb-6">
                 <div className="flex justify-between items-center">
-                  <span className="text-xl font-bold text-gray-900">Total</span>
-                  <span className="text-2xl font-bold text-gray-900">
+                  <span className="text-lg sm:text-xl font-bold text-gray-900">
+                    Total
+                  </span>
+                  <span className="text-xl sm:text-2xl font-bold text-gray-900">
                     ${total.toFixed(2)}
                   </span>
                 </div>
               </div>
 
-              <button className="w-full bg-gray-900 text-white py-4 rounded-lg font-bold text-sm hover:bg-gray-800 transition-colors mb-4">
+              <button className="w-full bg-gray-900 text-white py-3 sm:py-4 rounded-lg font-bold text-xs sm:text-sm hover:bg-gray-800 transition-colors mb-3 sm:mb-4">
                 CHECKOUT
               </button>
 
-              <button className="w-full text-gray-600 text-sm underline hover:text-gray-900">
+              <button className="w-full text-gray-600 text-xs sm:text-sm underline hover:text-gray-900">
                 Use a promo code
               </button>
             </div>

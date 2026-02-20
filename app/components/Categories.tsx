@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
@@ -27,16 +28,10 @@ export default function Categories() {
     async function fetchCategories() {
       try {
         setLoading(true);
-        const response = await fetch(
+        const response = await axios.get(
           "https://api.escuelajs.co/api/v1/categories",
         );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch categories");
-        }
-
-        const data = await response.json();
-        setCategories(data);
+        setCategories(response.data);
       } catch (err) {
         setError(err instanceof Error ? err.message : "An error occurred");
       } finally {

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import axios from "axios";
 import ProductCard from "./ProductCard";
 import Link from "next/link";
 import { gsap } from "gsap";
@@ -28,16 +29,10 @@ export default function NewDrops() {
     async function fetchProducts() {
       try {
         setLoading(true);
-        const response = await fetch(
+        const response = await axios.get(
           "https://api.escuelajs.co/api/v1/products?offset=0&limit=4",
         );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch products");
-        }
-
-        const data = await response.json();
-        setProducts(data);
+        setProducts(response.data);
       } catch (err) {
         setError(err instanceof Error ? err.message : "An error occurred");
       } finally {

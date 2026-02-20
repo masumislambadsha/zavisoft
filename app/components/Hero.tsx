@@ -53,7 +53,7 @@ export default function Hero() {
         <div className="font-bold uppercase text">
           <h1
             ref={titleRef}
-            className="font-bold text-6xl md:text-8xl lg:text-[220px] md:leading-[0.8] tracking-normal uppercase text-center"
+            className="font-bold my-5 text-6xl md:text-8xl lg:text-[220px] md:leading-[0.8] tracking-normal uppercase text-center"
           >
             <span className="text-[#232321] inline-block translate-y-[6px]">
               DO IT

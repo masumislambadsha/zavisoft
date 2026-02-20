@@ -1,5 +1,6 @@
 "use client";
 
+import axios from "axios";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -35,15 +36,13 @@ export default function RelatedProducts({
           url = `https://api.escuelajs.co/api/v1/products?categoryId=${categoryId}&limit=12`;
         }
 
-        const res = await fetch(url, { cache: "no-store" });
-        if (res.ok) {
-          const data = await res.json();
-          // Filter out current product if provided
-          const filtered = currentProductId
-            ? data.filter((p: Product) => p.id !== currentProductId)
-            : data;
-          setProducts(filtered.slice(0, limit));
-        }
+        const res = await axios.get(url);
+        const data = res.data;
+        // Filter out current product if provided
+        const filtered = currentProductId
+          ? data.filter((p: Product) => p.id !== currentProductId)
+          : data;
+        setProducts(filtered.slice(0, limit));
       } catch {
         console.log("Failed to load related products");
       }

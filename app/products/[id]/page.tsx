@@ -1,5 +1,6 @@
 "use client";
 
+import axios from "axios";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -22,12 +23,10 @@ interface Product {
 
 async function getProduct(id: string): Promise<Product | null> {
   try {
-    const res = await fetch(`https://api.escuelajs.co/api/v1/products/${id}`, {
-      cache: "no-store",
-    });
-
-    if (!res.ok) return null;
-    return res.json();
+    const res = await axios.get(
+      `https://api.escuelajs.co/api/v1/products/${id}`,
+    );
+    return res.data;
   } catch {
     return null;
   }

@@ -66,7 +66,7 @@ export default function Footer() {
               <h3 className="text-2xl md:text-3xl lg:text-4xl font-semibold mb-3 md:mb-4 text-[#FFA52F]">
                 About us
               </h3>
-              <p className="text-[#E7E7E3] text-base md:text-lg lg:text-xl font-semibold leading-relaxed">
+              <p className="text-[#E7E7E3] text-base md:text-lg lg:text-xl font-medium leading-relaxed font-(family-name:--font-open-sans)">
                 We are the biggest hyperstore in the universe. We got you all
                 cover with our exclusive collections and latest drops.
               </p>
@@ -77,11 +77,11 @@ export default function Footer() {
               <h3 className="text-2xl md:text-3xl lg:text-4xl font-semibold mb-3 md:mb-4 text-[#FFA52F]">
                 Categories
               </h3>
-              <ul className="space-y-2">
+              <ul className="space-y-2 font-(family-name:--font-open-sans)">
                 <li>
                   <Link
                     href="/runners"
-                    className="text-white hover:text-gray-300 transition-colors text-base md:text-lg lg:text-xl font-semibold"
+                    className="text-white hover:text-gray-300 transition-colors text-base md:text-lg lg:text-xl font-medium"
                   >
                     Runners
                   </Link>
@@ -89,7 +89,7 @@ export default function Footer() {
                 <li>
                   <Link
                     href="/sneakers"
-                    className="text-white hover:text-gray-300 transition-colors text-base md:text-lg lg:text-xl font-semibold"
+                    className="text-white hover:text-gray-300 transition-colors text-base md:text-lg lg:text-xl font-medium"
                   >
                     Sneakers
                   </Link>
@@ -97,7 +97,7 @@ export default function Footer() {
                 <li>
                   <Link
                     href="/basketball"
-                    className="text-white hover:text-gray-300 transition-colors text-base md:text-lg lg:text-xl font-semibold"
+                    className="text-white hover:text-gray-300 transition-colors text-base md:text-lg lg:text-xl font-medium"
                   >
                     Basketball
                   </Link>
@@ -113,7 +113,7 @@ export default function Footer() {
                 <li>
                   <Link
                     href="/golf"
-                    className="text-white hover:text-gray-300 transition-colors text-base md:text-lg lg:text-xl font-semibold"
+                    className="text-white hover:text-gray-300 transition-colors text-base md:text-lg lg:text-xl font-medium"
                   >
                     Golf
                   </Link>
@@ -121,7 +121,7 @@ export default function Footer() {
                 <li>
                   <Link
                     href="/hiking"
-                    className="text-white hover:text-gray-300 transition-colors text-base md:text-lg lg:text-xl font-semibold"
+                    className="text-white hover:text-gray-300 transition-colors text-base md:text-lg lg:text-xl font-medium"
                   >
                     Hiking
                   </Link>
@@ -134,11 +134,11 @@ export default function Footer() {
               <h3 className="text-2xl md:text-3xl lg:text-4xl font-semibold mb-3 md:mb-4 text-[#FFA52F]">
                 Company
               </h3>
-              <ul className="space-y-2">
+              <ul className="space-y-2 font-(family-name:--font-open-sans)">
                 <li>
                   <Link
                     href="/about"
-                    className="text-white hover:text-gray-300 transition-colors text-base md:text-lg lg:text-xl font-semibold"
+                    className="text-white hover:text-gray-300 transition-colors text-base md:text-lg lg:text-xl font-medium"
                   >
                     About
                   </Link>
@@ -146,7 +146,7 @@ export default function Footer() {
                 <li>
                   <Link
                     href="/contact"
-                    className="text-white hover:text-gray-300 transition-colors text-base md:text-lg lg:text-xl font-semibold"
+                    className="text-white hover:text-gray-300 transition-colors text-base md:text-lg lg:text-xl font-medium"
                   >
                     Contact
                   </Link>
@@ -154,7 +154,7 @@ export default function Footer() {
                 <li>
                   <Link
                     href="/blogs"
-                    className="text-white hover:text-gray-300 transition-colors text-base md:text-lg lg:text-xl font-semibold"
+                    className="text-white hover:text-gray-300 transition-colors text-base md:text-lg lg:text-xl font-medium"
                   >
                     Blogs
                   </Link>
