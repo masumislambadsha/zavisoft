@@ -38,6 +38,7 @@ export default function ProductPage({
   params: Promise<{ id: string }>;
 }) {
   const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState(true);
   const [selectedColor, setSelectedColor] = useState<string>("navy");
   const [selectedSize, setSelectedSize] = useState<number | null>(null);
   const [isWishlisted, setIsWishlisted] = useState(false);
@@ -45,22 +46,30 @@ export default function ProductPage({
 
   useEffect(() => {
     async function loadProduct() {
-      const { id } = await params;
-      const data = await getProduct(id);
-      if (!data) {
+      try {
+        setLoading(true);
+        const { id } = await params;
+        const data = await getProduct(id);
+        if (!data) {
+          notFound();
+        }
+        setProduct(data);
+      } catch (error) {
+        console.error("Error loading product:", error);
         notFound();
+      } finally {
+        setLoading(false);
       }
-      setProduct(data);
     }
     loadProduct();
   }, [params]);
 
-  if (!product) {
+  if (loading || !product) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-[#e7e7e3]">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading...</p>
+          <p className="mt-4 text-gray-600 font-medium">Loading product...</p>
         </div>
       </div>
     );

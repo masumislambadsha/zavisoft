@@ -31,7 +31,13 @@ export default function Categories() {
         const response = await axios.get(
           "https://api.escuelajs.co/api/v1/categories",
         );
-        setCategories(response.data);
+
+        // Filter out categories with valid images
+        const validCategories = response.data.filter(
+          (cat: Category) => cat.image && cat.image.startsWith("http"),
+        );
+
+        setCategories(validCategories);
       } catch (err) {
         setError(err instanceof Error ? err.message : "An error occurred");
       } finally {
@@ -151,7 +157,7 @@ export default function Categories() {
           <div className="flex gap-2">
             <button
               onClick={handlePrev}
-              className="w-8 h-8 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-[#707070] hover:bg-[#606060] flex items-center justify-center transition-colors"
+              className="w-8 h-8 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-white hover:bg-gray-100 flex items-center justify-center transition-colors"
               aria-label="Previous"
             >
               <ChevronLeft
@@ -189,6 +195,7 @@ export default function Categories() {
                   width={450}
                   height={450}
                   className="object-contain group-hover:scale-105 transition-transform duration-300"
+                  unoptimized
                 />
               </div>
 
