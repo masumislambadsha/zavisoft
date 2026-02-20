@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useCart } from "@/app/context/CartContext";
 import toast from "react-hot-toast";
+import RelatedProducts from "@/app/components/RelatedProducts";
 
 interface Product {
   id: number;
@@ -38,7 +39,6 @@ export default function ProductPage({
   params: Promise<{ id: string }>;
 }) {
   const [product, setProduct] = useState<Product | null>(null);
-  const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [selectedColor, setSelectedColor] = useState<string>("navy");
   const [selectedSize, setSelectedSize] = useState<number | null>(null);
   const [isWishlisted, setIsWishlisted] = useState(false);
@@ -52,30 +52,13 @@ export default function ProductPage({
         notFound();
       }
       setProduct(data);
-
-      // Fetch related products from the same category
-      try {
-        const res = await fetch(
-          `https://api.escuelajs.co/api/v1/products?categoryId=${data.category.id}&limit=8`,
-          { cache: "no-store" },
-        );
-        if (res.ok) {
-          const products = await res.json();
-          // Filter out current product and limit to 8
-          setRelatedProducts(
-            products.filter((p: Product) => p.id !== data.id).slice(0, 8),
-          );
-        }
-      } catch {
-        console.log("Failed to load related products");
-      }
     }
     loadProduct();
   }, [params]);
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto"></div>
           <p className="mt-4 text-gray-600">Loading...</p>
@@ -115,7 +98,7 @@ export default function ProductPage({
             {product.images.slice(0, 3).map((image, index) => (
               <div
                 key={index}
-                className="relative h-40 md:h-auto bg-white rounded-lg overflow-hidden"
+                className="relative h-40 md:h-auto rounded-lg overflow-hidden"
               >
                 <Image
                   src={image}
@@ -264,119 +247,11 @@ export default function ProductPage({
         </div>
 
         {/* You may also like section */}
-        {relatedProducts.length > 0 && (
-          <div className="mt-12 md:mt-16">
-            <div className="flex items-center justify-between mb-4 md:mb-6">
-              <h2 className="text-xl md:text-2xl font-bold text-gray-900">
-                You may also like
-              </h2>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => {
-                    const container = document.getElementById("related-scroll");
-                    if (container) {
-                      const scrollAmount =
-                        window.innerWidth < 768 ? container.clientWidth : 300;
-                      container.scrollBy({
-                        left: -scrollAmount,
-                        behavior: "smooth",
-                      });
-                    }
-                  }}
-                  className="w-9 h-9 md:w-10 md:h-10 bg-gray-200 hover:bg-gray-300 text-gray-900 rounded-lg flex items-center justify-center transition-colors"
-                  aria-label="Scroll left"
-                >
-                  <svg
-                    className="w-4 h-4 md:w-5 md:h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 19l-7-7 7-7"
-                    />
-                  </svg>
-                </button>
-                <button
-                  onClick={() => {
-                    const container = document.getElementById("related-scroll");
-                    if (container) {
-                      const scrollAmount =
-                        window.innerWidth < 768 ? container.clientWidth : 300;
-                      container.scrollBy({
-                        left: scrollAmount,
-                        behavior: "smooth",
-                      });
-                    }
-                  }}
-                  className="w-9 h-9 md:w-10 md:h-10 bg-gray-900 hover:bg-gray-800 text-white rounded-lg flex items-center justify-center transition-colors"
-                  aria-label="Scroll right"
-                >
-                  <svg
-                    className="w-4 h-4 md:w-5 md:h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            {/* Mobile: 2-column grid with horizontal scroll, Desktop: horizontal scroll */}
-            <div
-              id="related-scroll"
-              className="grid grid-cols-2 md:flex gap-3 md:gap-4 overflow-x-auto scrollbar-hide scroll-smooth pb-4 snap-x snap-mandatory"
-              style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-            >
-              {relatedProducts.slice(0, 4).map((relatedProduct, index) => (
-                <div
-                  key={relatedProduct.id}
-                  className={`bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow md:shrink-0 md:w-64 snap-start ${
-                    index >= 2 ? "md:block" : ""
-                  }`}
-                >
-                  <div className="relative">
-                    <span className="absolute top-2 left-2 md:top-3 md:left-3 bg-blue-600 text-white text-xs font-semibold px-2 md:px-3 py-1 rounded-full z-10">
-                      New
-                    </span>
-                    <div className="relative h-40 md:h-48 bg-gray-100">
-                      <Image
-                        src={relatedProduct.images[0]}
-                        alt={relatedProduct.title}
-                        fill
-                        className="object-contain p-3 md:p-4"
-                      />
-                    </div>
-                  </div>
-                  <div className="p-3 md:p-4">
-                    <h3 className="text-xs md:text-sm font-semibold text-gray-900 mb-2 md:mb-3 uppercase line-clamp-2 min-h-[32px] md:min-h-[40px]">
-                      {relatedProduct.title}
-                    </h3>
-                    <a
-                      href={`/products/${relatedProduct.id}`}
-                      className="block w-full bg-gray-900 text-white text-center py-2 md:py-2.5 rounded-lg font-semibold hover:bg-gray-800 transition-colors text-xs md:text-sm"
-                    >
-                      VIEW PRODUCT -{" "}
-                      <span className="text-yellow-500">
-                        ${relatedProduct.price}
-                      </span>
-                    </a>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+        <RelatedProducts
+          categoryId={product.category.id}
+          currentProductId={product.id}
+          limit={4}
+        />
       </div>
     </div>
   );

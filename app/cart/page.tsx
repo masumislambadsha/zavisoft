@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "../context/CartContext";
 import Swal from "sweetalert2";
+import RelatedProducts from "../components/RelatedProducts";
 
 export default function CartPage() {
   const { cart, removeFromCart, updateQuantity, cartTotal, cartCount } =
@@ -264,6 +265,9 @@ export default function CartPage() {
             </div>
           </div>
         </div>
+
+        {/* You may also like section */}
+        <RelatedProducts limit={4} />
       </div>
     </div>
   );
