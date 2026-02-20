@@ -264,7 +264,7 @@ export default function ProductPage({
               <h2 className="text-xl md:text-2xl font-bold text-gray-900">
                 You may also like
               </h2>
-              <div className="flex gap-2">
+              <div className="hidden md:flex gap-2">
                 <button
                   onClick={() => {
                     const container = document.getElementById("related-scroll");
@@ -272,11 +272,11 @@ export default function ProductPage({
                       container.scrollBy({ left: -300, behavior: "smooth" });
                     }
                   }}
-                  className="w-9 h-9 md:w-10 md:h-10 bg-gray-900 hover:bg-gray-800 text-white rounded-lg flex items-center justify-center transition-colors"
+                  className="w-10 h-10 bg-gray-900 hover:bg-gray-800 text-white rounded-lg flex items-center justify-center transition-colors"
                   aria-label="Scroll left"
                 >
                   <svg
-                    className="w-4 h-4 md:w-5 md:h-5"
+                    className="w-5 h-5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -296,11 +296,11 @@ export default function ProductPage({
                       container.scrollBy({ left: 300, behavior: "smooth" });
                     }
                   }}
-                  className="w-9 h-9 md:w-10 md:h-10 bg-gray-900 hover:bg-gray-800 text-white rounded-lg flex items-center justify-center transition-colors"
+                  className="w-10 h-10 bg-gray-900 hover:bg-gray-800 text-white rounded-lg flex items-center justify-center transition-colors"
                   aria-label="Scroll right"
                 >
                   <svg
-                    className="w-4 h-4 md:w-5 md:h-5"
+                    className="w-5 h-5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -316,36 +316,75 @@ export default function ProductPage({
               </div>
             </div>
 
+            {/* Mobile: 2-column grid */}
+            <div className="grid grid-cols-2 gap-3 md:hidden">
+              {relatedProducts.slice(0, 4).map((relatedProduct) => (
+                <div
+                  key={relatedProduct.id}
+                  className="bg-white rounded-xl overflow-hidden shadow-sm"
+                >
+                  <div className="relative">
+                    <span className="absolute top-2 left-2 bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded-full z-10">
+                      New
+                    </span>
+                    <div className="relative h-40 bg-gray-100">
+                      <Image
+                        src={relatedProduct.images[0]}
+                        alt={relatedProduct.title}
+                        fill
+                        className="object-contain p-3"
+                      />
+                    </div>
+                  </div>
+                  <div className="p-3">
+                    <h3 className="text-xs font-semibold text-gray-900 mb-2 uppercase line-clamp-2 min-h-[32px]">
+                      {relatedProduct.title}
+                    </h3>
+                    <a
+                      href={`/products/${relatedProduct.id}`}
+                      className="block w-full bg-gray-900 text-white text-center py-2 rounded-lg font-semibold hover:bg-gray-800 transition-colors text-xs"
+                    >
+                      VIEW PRODUCT -{" "}
+                      <span className="text-yellow-500">
+                        ${relatedProduct.price}
+                      </span>
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Desktop: Horizontal scroll */}
             <div
               id="related-scroll"
-              className="flex gap-3 md:gap-4 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
+              className="hidden md:flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
               style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             >
               {relatedProducts.map((relatedProduct) => (
                 <div
                   key={relatedProduct.id}
-                  className="shrink-0 w-52 md:w-64 bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow"
+                  className="shrink-0 w-64 bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow"
                 >
                   <div className="relative">
-                    <span className="absolute top-2 left-2 md:top-3 md:left-3 bg-blue-600 text-white text-xs font-semibold px-2 md:px-3 py-1 rounded-full z-10">
+                    <span className="absolute top-3 left-3 bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full z-10">
                       New
                     </span>
-                    <div className="relative h-40 md:h-48 bg-gray-100">
+                    <div className="relative h-48 bg-gray-100">
                       <Image
                         src={relatedProduct.images[0]}
                         alt={relatedProduct.title}
                         fill
-                        className="object-contain p-3 md:p-4"
+                        className="object-contain p-4"
                       />
                     </div>
                   </div>
-                  <div className="p-3 md:p-4">
-                    <h3 className="text-xs md:text-sm font-semibold text-gray-900 mb-2 md:mb-3 uppercase line-clamp-2 min-h-[32px] md:min-h-[40px]">
+                  <div className="p-4">
+                    <h3 className="text-sm font-semibold text-gray-900 mb-3 uppercase line-clamp-2 min-h-[40px]">
                       {relatedProduct.title}
                     </h3>
                     <a
                       href={`/products/${relatedProduct.id}`}
-                      className="block w-full bg-gray-900 text-white text-center py-2 md:py-2.5 rounded-lg font-semibold hover:bg-gray-800 transition-colors text-xs md:text-sm"
+                      className="block w-full bg-gray-900 text-white text-center py-2.5 rounded-lg font-semibold hover:bg-gray-800 transition-colors text-sm"
                     >
                       VIEW PRODUCT -{" "}
                       <span className="text-yellow-500">
