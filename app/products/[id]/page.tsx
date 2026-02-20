@@ -36,6 +36,7 @@ export default function ProductPage({
   params: Promise<{ id: string }>;
 }) {
   const [product, setProduct] = useState<Product | null>(null);
+  const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [selectedColor, setSelectedColor] = useState<string>("navy");
   const [selectedSize, setSelectedSize] = useState<number | null>(null);
   const [isWishlisted, setIsWishlisted] = useState(false);
@@ -48,6 +49,23 @@ export default function ProductPage({
         notFound();
       }
       setProduct(data);
+
+      // Fetch related products from the same category
+      try {
+        const res = await fetch(
+          `https://api.escuelajs.co/api/v1/products?categoryId=${data.category.id}&limit=8`,
+          { cache: "no-store" },
+        );
+        if (res.ok) {
+          const products = await res.json();
+          // Filter out current product and limit to 8
+          setRelatedProducts(
+            products.filter((p: Product) => p.id !== data.id).slice(0, 8),
+          );
+        }
+      } catch {
+        console.log("Failed to load related products");
+      }
     }
     loadProduct();
   }, [params]);
@@ -234,6 +252,108 @@ export default function ProductPage({
             </div>
           </div>
         </div>
+
+        {/* You may also like section */}
+        {relatedProducts.length > 0 && (
+          <div className="mt-16">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-gray-900">
+                You may also like
+              </h2>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => {
+                    const container = document.getElementById("related-scroll");
+                    if (container) {
+                      container.scrollBy({ left: -300, behavior: "smooth" });
+                    }
+                  }}
+                  className="w-10 h-10 bg-gray-200 hover:bg-gray-300 rounded-lg flex items-center justify-center transition-colors"
+                  aria-label="Scroll left"
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 19l-7-7 7-7"
+                    />
+                  </svg>
+                </button>
+                <button
+                  onClick={() => {
+                    const container = document.getElementById("related-scroll");
+                    if (container) {
+                      container.scrollBy({ left: 300, behavior: "smooth" });
+                    }
+                  }}
+                  className="w-10 h-10 bg-gray-900 hover:bg-gray-800 text-white rounded-lg flex items-center justify-center transition-colors"
+                  aria-label="Scroll right"
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div
+              id="related-scroll"
+              className="flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
+              style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+            >
+              {relatedProducts.map((relatedProduct) => (
+                <div
+                  key={relatedProduct.id}
+                  className="shrink-0 w-64 bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow"
+                >
+                  <div className="relative">
+                    <span className="absolute top-3 left-3 bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full z-10">
+                      New
+                    </span>
+                    <div className="relative h-48 bg-gray-100">
+                      <Image
+                        src={relatedProduct.images[0]}
+                        alt={relatedProduct.title}
+                        fill
+                        className="object-contain p-4"
+                      />
+                    </div>
+                  </div>
+                  <div className="p-4">
+                    <h3 className="text-sm font-semibold text-gray-900 mb-3 uppercase line-clamp-2 min-h-[40px]">
+                      {relatedProduct.title}
+                    </h3>
+                    <a
+                      href={`/products/${relatedProduct.id}`}
+                      className="block w-full bg-gray-900 text-white text-center py-2.5 rounded-lg font-semibold hover:bg-gray-800 transition-colors text-sm"
+                    >
+                      VIEW PRODUCT -{" "}
+                      <span className="text-yellow-500">
+                        ${relatedProduct.price}
+                      </span>
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
