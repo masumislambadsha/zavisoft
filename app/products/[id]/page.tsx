@@ -42,6 +42,7 @@ export default function ProductPage({
   const [loading, setLoading] = useState(true);
   const [selectedColor, setSelectedColor] = useState<string>("navy");
   const [selectedSize, setSelectedSize] = useState<number | null>(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const { addToCart } = useCart();
   const { isInWishlist, toggleWishlist } = useWishlist();
 
@@ -115,32 +116,88 @@ export default function ProductPage({
 
   const isProductInWishlist = isInWishlist(product.id);
 
+  // Ensure we always have 4 images by repeating if necessary
+  const displayImages = [...product.images];
+  while (displayImages.length < 4) {
+    displayImages.push(...product.images);
+  }
+  const fourImages = displayImages.slice(0, 4);
+
   return (
     <div className="min-h-screen">
       <div className="max-w-[1320px] mx-auto px-4 py-4 md:py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
-          {/* imgs */}
-          <div className="grid grid-cols-2 lg:col-span-2 gap-3 md:gap-4">
-            {product.images.slice(0, 3).map((image, index) => (
-              <div
-                key={index}
-                className="relative h-40 md:h-auto rounded-lg overflow-hidden"
-              >
+          {/* Image Gallery */}
+          <div className="lg:col-span-2">
+            {/* Mobile Layout: Large image on top with dots, thumbnails below */}
+            <div className="md:hidden space-y-3">
+              {/* Main large image */}
+              <div className="relative h-64 sm:h-80 bg-white rounded-2xl overflow-hidden">
                 <Image
-                  src={image}
-                  alt={`${product.title} - Image ${index + 1}`}
+                  src={fourImages[selectedImageIndex]}
+                  alt={product.title}
                   fill
-                  className="object-contain p-3 md:p-4"
+                  className="object-contain p-6"
+                  unoptimized
                 />
+
+                {/* Pagination dots - mobile only */}
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+                  {fourImages.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setSelectedImageIndex(index)}
+                      className={`w-2 h-2 rounded-full transition-all ${
+                        selectedImageIndex === index
+                          ? "bg-blue-600 w-6"
+                          : "bg-gray-300 hover:bg-gray-400"
+                      }`}
+                      aria-label={`View image ${index + 1}`}
+                    />
+                  ))}
+                </div>
               </div>
-            ))}
-            <div className="relative h-40 md:h-auto bg-white rounded-lg overflow-hidden">
-              <Image
-                src={product.images[0]}
-                alt={`${product.title} - Main`}
-                fill
-                className="object-contain p-3 md:p-4"
-              />
+
+              {/* Thumbnail images row - mobile */}
+              <div className="grid grid-cols-4 gap-2 sm:gap-3">
+                {fourImages.map((image, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setSelectedImageIndex(index)}
+                    className={`relative h-20 sm:h-24 bg-white rounded-lg overflow-hidden cursor-pointer transition-all ${
+                      selectedImageIndex === index
+                        ? "ring-2 ring-blue-600"
+                        : "hover:ring-2 hover:ring-gray-300"
+                    }`}
+                  >
+                    <Image
+                      src={image}
+                      alt={`${product.title} - Image ${index + 1}`}
+                      fill
+                      className="object-contain p-2"
+                      unoptimized
+                    />
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Desktop Layout: 2x2 grid of images */}
+            <div className="hidden md:grid grid-cols-2 gap-3 md:gap-4">
+              {fourImages.map((image, index) => (
+                <div
+                  key={index}
+                  className="relative h-48 md:h-64 lg:h-80 bg-white rounded-lg overflow-hidden"
+                >
+                  <Image
+                    src={image}
+                    alt={`${product.title} - Image ${index + 1}`}
+                    fill
+                    className="object-contain p-3 md:p-4"
+                    unoptimized
+                  />
+                </div>
+              ))}
             </div>
           </div>
 
@@ -189,12 +246,12 @@ export default function ProductPage({
                   SIZE CHART
                 </button>
               </div>
-              <div className="grid grid-cols-5 gap-1.5 md:gap-2">
+              <div className="flex flex-wrap gap-1.5 md:gap-2">
                 {sizes.map((size) => (
                   <button
                     key={size}
                     onClick={() => setSelectedSize(size)}
-                    className={`py-2 md:py-3 px-2 md:px-4 border rounded-lg text-xs md:text-sm font-medium transition-colors ${
+                    className={`px-4 py-3 border rounded-lg text-xs md:text-sm font-medium transition-colors ${
                       selectedSize === size
                         ? "bg-gray-900 text-white border-gray-900"
                         : "bg-white text-gray-900 border-gray-300 hover:border-gray-900"
