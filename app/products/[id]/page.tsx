@@ -193,7 +193,7 @@ export default function ProductPage({
               {fourImages.map((image, index) => (
                 <div
                   key={index}
-                  className="relative h-48 md:h-64 lg:h-80 bg-white rounded-lg overflow-hidden"
+                  className="relative h-48 md:h-64 lg:h-[430px] bg-white rounded-lg overflow-hidden"
                 >
                   <Image
                     src={image}
