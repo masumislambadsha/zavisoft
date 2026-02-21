@@ -214,6 +214,9 @@ export default function Categories() {
                   height={450}
                   className="object-contain group-hover:scale-105 transition-transform duration-300"
                   unoptimized
+                  quality={80}
+                  loading="lazy"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>
 

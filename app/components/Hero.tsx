@@ -15,7 +15,6 @@ export default function Hero() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-
       gsap.from(titleRef.current?.children || [], {
         y: 100,
         opacity: 0,
@@ -23,7 +22,6 @@ export default function Hero() {
         stagger: 0.2,
         ease: "power3.out",
       });
-
 
       gsap.from(heroRef.current, {
         scale: 0.9,
@@ -33,7 +31,6 @@ export default function Hero() {
         ease: "power3.out",
       });
 
-   
       gsap.from(contentRef.current?.children || [], {
         y: 50,
         opacity: 0,
@@ -76,6 +73,9 @@ export default function Hero() {
             fill
             className="object-cover"
             priority
+            fetchPriority="high"
+            quality={85}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1320px"
           />
           {/* left bagde */}
           <div className="absolute left-0 top-[35%] sm:top-[38%] md:top-40 -translate-y-1/2 bg-[#232321] font-semibold text-[#E7E7E3] p-3 md:p-4 rounded-r-md z-20">
@@ -107,20 +107,24 @@ export default function Hero() {
           <div className="absolute bottom-4 sm:bottom-6 md:bottom-8 right-4 sm:right-6 md:right-8 flex flex-col gap-2 md:gap-3 z-10">
             <div className="bg-white/90 backdrop-blur-sm rounded-lg md:rounded-xl p-1.5 md:p-2 hover:bg-white transition-all cursor-pointer border-2 border-[#FFA52F] w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 lg:w-24 lg:h-24">
               <Image
-                src="/hero-mini-1.png"
+                src="/hero-mini-2.png"
                 alt="Nike Air Max View 1"
-                width={80}
-                height={80}
+                width={96}
+                height={96}
                 className="object-contain w-full h-full"
+                quality={75}
+                sizes="(max-width: 640px) 64px, (max-width: 768px) 72px, (max-width: 1024px) 80px, 96px"
               />
             </div>
             <div className="bg-white/90 backdrop-blur-sm rounded-lg md:rounded-xl p-1.5 md:p-2 hover:bg-white transition-all cursor-pointer border-2 border-[#E91E63] w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 lg:w-24 lg:h-24">
               <Image
-                src="/hero-mini-2.png"
+                src="/mini-img-2.png"
                 alt="Nike Air Max View 2"
-                width={80}
-                height={80}
+                width={96}
+                height={96}
                 className="object-contain w-full h-full"
+                quality={75}
+                sizes="(max-width: 640px) 64px, (max-width: 768px) 72px, (max-width: 1024px) 80px, 96px"
               />
             </div>
           </div>

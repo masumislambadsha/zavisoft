@@ -139,6 +139,9 @@ export default function ProductPage({
                   fill
                   className="object-contain p-6"
                   unoptimized
+                  quality={85}
+                  priority={selectedImageIndex === 0}
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
 
                 {/* Pagination dots - mobile only */}
@@ -176,6 +179,9 @@ export default function ProductPage({
                       fill
                       className="object-contain p-2"
                       unoptimized
+                      quality={75}
+                      loading="lazy"
+                      sizes="80px"
                     />
                   </button>
                 ))}
@@ -195,6 +201,9 @@ export default function ProductPage({
                     fill
                     className="object-contain p-3 md:p-4"
                     unoptimized
+                    quality={85}
+                    loading={index < 2 ? "eager" : "lazy"}
+                    sizes="(max-width: 768px) 50vw, 33vw"
                   />
                 </div>
               ))}
