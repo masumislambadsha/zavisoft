@@ -121,7 +121,7 @@ export default function CartPage() {
                             {item.color}
                           </p>
                         </div>
-                        <p className="font-bold text-blue-600 text-lg sm:text-xl md:text-2xl whitespace-nowrap">
+                        <p className="font-bold text-[#4A69E2] text-lg sm:text-xl md:text-2xl whitespace-nowrap">
                           ${item.price.toFixed(2)}
                         </p>
                       </div>

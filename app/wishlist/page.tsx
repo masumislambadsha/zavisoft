@@ -124,7 +124,7 @@ export default function WishlistPage() {
                   <h3 className="font-bold text-gray-900 text-sm md:text-base uppercase mb-2 line-clamp-2 min-h-[40px]">
                     {item.title}
                   </h3>
-                  <p className="text-lg md:text-xl font-bold text-blue-600 mb-3">
+                  <p className="text-lg md:text-xl font-bold text-[#4A69E2] mb-3">
                     ${item.price.toFixed(2)}
                   </p>
 

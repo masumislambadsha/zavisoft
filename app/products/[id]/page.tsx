@@ -211,7 +211,7 @@ export default function ProductPage({
               {product.title}
             </h1>
 
-            <div className="text-2xl md:text-3xl font-bold text-blue-600">
+            <div className="text-2xl md:text-3xl font-bold text-[#4A69E2]">
               ${product.price}
             </div>
 
