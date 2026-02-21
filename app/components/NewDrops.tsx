@@ -108,7 +108,7 @@ export default function NewDrops() {
         </div>
 
         {/* products grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-6 items-stretch justify-center h-[]">
           {products.map((product) => (
             <ProductCard
               key={product.id}

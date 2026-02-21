@@ -15,34 +15,33 @@ export default function ProductCard({
   images,
 }: ProductCardProps) {
   return (
-    <div className="bg-white rounded-xl md:rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow">
-      {/* badge */}
-      <div className="relative">
-        <span className="absolute top-2.5 md:top-4 left-2.5 md:left-4 bg-[#4A69E2] text-white text-[10px] md:text-xs font-semibold px-2 md:px-3 py-0.5 md:py-1 rounded-full z-10">
+    <div className="group">
+      {/* Image container with white bg */}
+      <div className="relative bg-white rounded-2xl md:rounded-3xl p-3 md:p-4 mb-3 md:mb-4 shadow-sm hover:shadow-lg transition-shadow">
+        {/* badge */}
+        <span className="absolute top-3 md:top-4 left-3 md:left-4 bg-[#4A69E2] text-white text-xs md:text-sm font-bold px-4 md:px-5 py-1.5 md:py-2 rounded-full z-10">
           New
         </span>
 
         {/* product img */}
-        <div className="relative h-36 sm:h-44 md:h-56 lg:h-64 bg-gray-100">
+        <div className="relative h-40 sm:h-48 md:h-64 lg:h-72 bg-[#F6F6F6] rounded-2xl md:rounded-3xl">
           <Image
-            src={images[0] || "/placeholder.png"}
+            src={images[0]}
             alt={title}
             fill
-            className="object-contain p-2 md:p-3 lg:p-4"
+            className="object-contain p-4 md:p-6"
           />
         </div>
       </div>
-
-      {/* info */}
-      <div className="p-2.5 md:p-3 lg:p-4">
-        <h3 className="text-[10px] sm:text-xs md:text-sm font-semibold text-[#232321] mb-2 md:mb-3 uppercase line-clamp-2 min-h-[28px] sm:min-h-[32px] md:min-h-[40px]">
+      <div>
+        <h3 className="text-sm md:text-base lg:text-lg font-bold text-[#232321] mb-3 md:mb-4 uppercase line-clamp-2 min-h-[40px] md:min-h-[48px]">
           {title}
         </h3>
 
         {/* view product btn */}
         <Link
           href={`/products/${id}`}
-          className="block w-full bg-[#232321] text-white text-center py-2 md:py-2.5 lg:py-3 rounded-lg font-semibold hover:bg-[#3A3A38] transition-colors text-[10px] sm:text-xs md:text-sm"
+          className="block w-full bg-[#232321] text-white text-center py-3 md:py-3.5 rounded-lg font-bold hover:bg-[#3A3A38] transition-colors text-sm md:text-base"
         >
           VIEW PRODUCT - <span className="text-[#FFA52F]">${price}</span>
         </Link>
