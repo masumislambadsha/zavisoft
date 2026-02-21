@@ -32,7 +32,6 @@ export default function Categories() {
           "https://api.escuelajs.co/api/v1/categories",
         );
 
-        
         const validCategories = response.data.filter(
           (cat: Category) => cat.image && cat.image.startsWith("http"),
         );
@@ -50,34 +49,53 @@ export default function Categories() {
 
   useEffect(() => {
     if (!loading && categories.length > 0) {
-      const ctx = gsap.context(() => {
-        gsap.from(headerRef.current, {
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 80%",
-          },
-          y: 50,
-          opacity: 0,
-          duration: 0.8,
-          ease: "power3.out",
-        });
+      // Refresh ScrollTrigger and add delay
+      ScrollTrigger.refresh();
 
-        gsap.from(".category-card", {
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 70%",
-          },
-          y: 80,
-          opacity: 0,
-          duration: 1,
-          stagger: 0.2,
-          ease: "power3.out",
-        });
-      }, sectionRef);
+      const timer = setTimeout(() => {
+        const ctx = gsap.context(() => {
+          // Animate header on scroll (only once)
+          gsap.fromTo(
+            headerRef.current,
+            { y: 50, opacity: 0 },
+            {
+              scrollTrigger: {
+                trigger: sectionRef.current,
+                start: "top 80%",
+                once: true, // Animation happens only once
+              },
+              y: 0,
+              opacity: 1,
+              duration: 0.8,
+              ease: "power3.out",
+            },
+          );
 
-      return () => ctx.revert();
+          // Animate category cards on scroll (only once)
+          gsap.fromTo(
+            ".category-card",
+            { y: 80, opacity: 0 },
+            {
+              scrollTrigger: {
+                trigger: sectionRef.current,
+                start: "top 70%",
+                once: true, // Animation happens only once
+              },
+              y: 0,
+              opacity: 1,
+              duration: 1,
+              stagger: 0.2,
+              ease: "power3.out",
+            },
+          );
+        }, sectionRef);
+
+        return () => ctx.revert();
+      }, 200);
+
+      return () => clearTimeout(timer);
     }
-  }, [loading, categories]);
+  }, [loading, categories]); // Removed currentIndex - no re-animation on navigation
 
   const handlePrev = () => {
     setCurrentIndex((prev) =>
